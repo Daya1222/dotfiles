@@ -5,13 +5,22 @@
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
 # Environment variables
-exec_always {
-    export XDG_CURRENT_DESKTOP=sway
-    export XDG_SESSION_DESKTOP=sway
-    export XDG_SESSION_TYPE=wayland
-}
-xwayland enable
 
+
+    # Set dark theme preference
+exec_always {
+systemctl --user import-environment TERMINAL
+    systemctl --user import-environment TERM
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+}
+
+# Start clipboard
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
+
+
+xwayland enable
 
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                              🚀 STARTUP PROGRAMS                            │
@@ -116,6 +125,21 @@ for_window [app_id="python3"] {
     border pixel 3
 }
 
+
+# PulseAudio Volume Control window rules
+for_window [app_id="pavucontrol"] {
+    floating enable
+    resize set 800 600
+    move position center
+    border pixel 2
+}
+
+for_window [app_id="org.gnome.Nautilus"] {
+    floating enable
+    resize set 1000 700
+    move position center
+    border pixel 2
+}
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                         🚀 DEFAULT APPLICATIONS                             │
 # └─────────────────────────────────────────────────────────────────────────────┘
@@ -217,9 +241,7 @@ bindsym $mod+Shift+r exec swaymsg exit   # Restart sway
 floating_modifier $mod normal
 
 # 🚪 Exit sway with confirmation
-bindsym $mod+Shift+e exec swaynag -t warning \
-    -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' \
-    -B 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+Shift+e exec $HOME/dotfiles/catppuccin/bin/power-menu.sh
 
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                           🧭 FOCUS NAVIGATION                               │
@@ -285,9 +307,9 @@ bindsym $mod+Shift+0 move container to workspace number 10
 # │                          📐 LAYOUT MANAGEMENT                               │
 # └─────────────────────────────────────────────────────────────────────────────┘
 
-# 🔀 Split orientation
-bindsym $mod+b splith    # Split horizontally
-bindsym $mod+v splitv    # Split vertically
+# # 🔀 Split orientation
+# bindsym $mod+b splith    # Split horizontally
+# bindsym $mod+v splitv    # Split vertically
 
 # 📋 Container layouts
 bindsym $mod+m layout tabbed        # Tabbed layout
@@ -355,6 +377,16 @@ bindsym Print exec $HOME/bin/screenshot.sh
 # 📐 Partial screenshot
 bindsym $mod+Print exec $HOME/bin/partial-screenshot.sh
 
+# Clipboard
+bindsym $mod+v exec $HOME/dotfiles/catppuccin/bin/clipboard.sh 
+bindsym $mod+Shift+v exec OME/dotfiles/catppuccin/bin/clipboard.sh clear
+bindsym $mod+Alt+v exec OME/dotfiles/catppuccin/bin/clipboard.sh delete
+
+# Add to ~/.config/sway/config
+# Emoji picker keybinds
+bindsym $mod+period exec $HOME/bin/emoji-picker.sh
+bindsym $mod+Shift+period exec $HOME/bin/emoji-picker.sh search
+bindsym $mod+Alt+period exec $HOME/bin/emoji-picker.sh recent
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                           📊 STATUS BAR                                     │
 # └─────────────────────────────────────────────────────────────────────────────┘
