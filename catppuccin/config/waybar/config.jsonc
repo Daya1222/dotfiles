@@ -5,7 +5,7 @@
     "margin-top": 8,
     "margin-right": 8,
     "margin-bottom": 0,
-    "margin-left":8 ,
+    "margin-left": 8,
     "modules-left": [
         "custom/launcher",
         "sway/workspaces"
@@ -60,8 +60,8 @@
     },
 
     "clock": {
-        "format": "   {:%H:%M - %a, %d %b %Y}",
-        "tooltip": false
+        "format": "   {:%I:%M %p - %a, %d %b %Y}",
+        "tooltip": false,
     },
 
     "cpu": {
@@ -69,16 +69,16 @@
         "interval": 2,
         "states": {
             "critical": 90
-        }
-    },
+        },
+        "on-click": "btop"                },
 
     "memory": {
         "format": "   {percentage}%",
         "interval": 2,
         "states": {
             "critical": 80
-        }
-    },
+        },
+        "on-click": "btop"          },
 
     "battery": {
         "format": "   {capacity}%",
@@ -87,8 +87,8 @@
             "warning": 20,
             "critical": 10
         },
-        "tooltip": false
-    },
+        "tooltip":true
+          },
 
     "backlight": {
         "format": "   {percent}%",
@@ -103,7 +103,7 @@
         "format-ethernet": "   {bandwidthDownBits}",
         "format-disconnected": "睊 no network",
         "interval": 5,
-        "on-click": "nm-connection-editor",
+        "on-click": "kitty --title nmtui-float --class nmtui-launcher -e nmtui",
         "tooltip": false
     },
 
@@ -117,14 +117,12 @@
         "tooltip": false
     },
 
-
-   
     "custom/power": {
-    "format": "",                        // Power icon (Nerd Font)
-    "on-click": "~/bin/power-menu.sh",
-    "tooltip": "Power Off",
-    "interval": 0
-}
-
+        "format": "",
+        "on-click": "~/bin/power-menu.sh",
+        "on-click-right": "systemctl suspend",      // Right click → suspend
+        "tooltip": "Power Off",
+        "interval": 0
+    }
 }
 

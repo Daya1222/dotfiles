@@ -16,9 +16,7 @@ systemctl --user import-environment TERMINAL
 }
 
 # Start clipboard
-exec wl-paste --type text --watch cliphist store
-exec wl-paste --type image --watch cliphist store
-
+exec wl-paste --watch cliphist store
 
 xwayland enable
 
@@ -52,7 +50,7 @@ set $right l
 
 # Window Border Colors:
 # class                   border    background  text        indicator   child_border
-client.focused           #B4A7D1   #2D1B69     #FFFFFF     #E78284     #B4A7D1
+client.focused           #B4A7D1   #2D1B69     #FFFFFF     #E78284     #b6a0ff
 client.focused_inactive  #8CAAEE   #414559     #C6D0F5     #BABBF1     #8CAAEE
 client.unfocused         #626880   #303446     #A5ADCE     #737994     #626880
 client.urgent            #E78284   #E78284     #303446     #E78284     #E78284
@@ -140,6 +138,17 @@ for_window [app_id="org.gnome.Nautilus"] {
     move position center
     border pixel 2
 }
+
+# In sway config:
+assign [title="nmtui"] workspace number 99
+for_window [title="nmtui"] {
+  floating enable
+  resize set 800 600  
+  move position center
+  move to workspace current
+}
+
+
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                         🚀 DEFAULT APPLICATIONS                             │
 # └─────────────────────────────────────────────────────────────────────────────┘
@@ -194,8 +203,8 @@ focus_follows_mouse yes
 # Beautiful window borders with gaps
 gaps inner 5
 gaps outer 3
-default_border pixel 3
-default_floating_border pixel 4
+default_border pixel 2
+default_floating_border pixel 2
 
 # Smart gaps (hide gaps when only one window)
 smart_gaps off
@@ -227,8 +236,6 @@ bindsym $mod+q kill
 # 🚀 Application launcher
 bindsym $mod+space exec $menu
 
-# TODO: Custom online search (uncomment when script is ready)
-# bindsym $mod+Shift+space exec $HOME/dotfiles/catpiccin/bin/online-search.sh
 
 # 🔕 Dismiss notifications
 bindsym Control+space exec makoctl dismiss
@@ -378,10 +385,8 @@ bindsym Print exec $HOME/bin/screenshot.sh
 bindsym $mod+Print exec $HOME/bin/partial-screenshot.sh
 
 # Clipboard
-bindsym $mod+v exec $HOME/dotfiles/catppuccin/bin/clipboard.sh 
-bindsym $mod+Shift+v exec OME/dotfiles/catppuccin/bin/clipboard.sh clear
-bindsym $mod+Alt+v exec OME/dotfiles/catppuccin/bin/clipboard.sh delete
-
+bindsym $mod+v exec exec cliphist list | wofi -S dmenu | cliphist decode | wl-copy 
+bindsym $mod+Shift+v exec cliphist wipe
 # Add to ~/.config/sway/config
 # Emoji picker keybinds
 bindsym $mod+period exec $HOME/bin/emoji-picker.sh

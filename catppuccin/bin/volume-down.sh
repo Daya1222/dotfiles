@@ -1,5 +1,5 @@
 #!/bin/sh
-MAX_RIGHT=80
+MAX_RIGHT=60
 INCREMENT=5
 
 # get current left and right volumes
