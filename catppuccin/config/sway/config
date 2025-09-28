@@ -149,6 +149,8 @@ for_window [title="nmtui"] {
 }
 
 
+
+
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                         🚀 DEFAULT APPLICATIONS                             │
 # └─────────────────────────────────────────────────────────────────────────────┘
@@ -326,7 +328,7 @@ bindsym $mod+t layout toggle split  # Toggle split layout
 bindsym $mod+f fullscreen
 
 # 🎈 Floating controls
-bindsym $mod+s       floating toggle     # Toggle floating
+bindsym $mod+s       floating toggle
 bindsym $mod+Shift+s focus mode_toggle   # Toggle focus mode
 
 # ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -387,11 +389,15 @@ bindsym $mod+Print exec $HOME/bin/partial-screenshot.sh
 # Clipboard
 bindsym $mod+v exec exec cliphist list | wofi -S dmenu | cliphist decode | wl-copy 
 bindsym $mod+Shift+v exec cliphist wipe
-# Add to ~/.config/sway/config
+
 # Emoji picker keybinds
 bindsym $mod+period exec $HOME/bin/emoji-picker.sh
 bindsym $mod+Shift+period exec $HOME/bin/emoji-picker.sh search
 bindsym $mod+Alt+period exec $HOME/bin/emoji-picker.sh recent
+
+# Wallpaper Switch
+bindsym $mod+w exec ~/bin/wallpaper.sh
+
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                           📊 STATUS BAR                                     │
 # └─────────────────────────────────────────────────────────────────────────────┘
