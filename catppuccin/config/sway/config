@@ -1,0 +1,379 @@
+#!/usr/bin/env bash
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                          ✨ BEAUTIFUL SWAY CONFIG ✨                         ║
+# ║                        Elegant • Functional • Gorgeous                       ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+# Environment variables
+exec_always {
+    export XDG_CURRENT_DESKTOP=sway
+    export XDG_SESSION_DESKTOP=sway
+    export XDG_SESSION_TYPE=wayland
+}
+xwayland enable
+
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                              🚀 STARTUP PROGRAMS                            │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+
+exec mako
+# exec waybar
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                              ⌨️ MODIFIER KEYS                               │
+# └─────────────────────────────────────────────────────────────────────────────┘
+# Logo key as modifier (Mod1 = Alt, Mod4 = Super/Logo)
+set $mod Mod4
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                            🧭 NAVIGATION KEYS                               │
+# └─────────────────────────────────────────────────────────────────────────────┘
+# Vim-style navigation (hjkl)
+set $left  h
+set $down  j
+set $up    k
+set $right l
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                          🎨 GORGEOUS COLOR SCHEME                           │
+# └─────────────────────────────────────────────────────────────────────────────┘
+# Beautiful purple-pink gradient theme with enhanced contrast
+
+# Window Border Colors:
+# class                   border    background  text        indicator   child_border
+client.focused           #B4A7D1   #2D1B69     #FFFFFF     #E78284     #B4A7D1
+client.focused_inactive  #8CAAEE   #414559     #C6D0F5     #BABBF1     #8CAAEE
+client.unfocused         #626880   #303446     #A5ADCE     #737994     #626880
+client.urgent            #E78284   #E78284     #303446     #E78284     #E78284
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                        🪟 BEAUTIFUL WINDOW RULES                            │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# 💬 Chat Applications
+for_window [app_id="libera"] {
+    floating enable
+    resize set height 500 px
+    resize set width 900 px
+    move position 1000 5
+    border pixel 3
+}
+
+for_window [app_id="tilde"] {
+    floating enable
+    resize set height 500 px
+    resize set width 900 px
+    move position 950 325
+    border pixel 3
+}
+
+for_window [class="Signal Beta"] {
+    floating enable
+    resize set height 980 px
+    resize set width 800 px
+    move position 30 25
+    border pixel 3
+}
+
+# 🎵 Media Applications
+for_window [app_id="cava"] {
+    floating enable
+    resize set height 525 px
+    resize set width 750 px
+    move position 1135 490
+    border pixel 3
+}
+
+for_window [class="Spotify"] {
+    floating enable
+    resize set height 650 px
+    resize set width 1050 px
+    move position 15 15
+    border pixel 3
+}
+
+for_window [app_id="mpv"] {
+    inhibit_idle fullscreen
+    border pixel 3
+}
+
+# 🖼️ Image Viewer
+for_window [app_id="imv"] {
+    border pixel 3
+}
+
+# 🔐 Security Applications
+for_window [app_id="veracrypt"] {
+    floating enable
+    border pixel 3
+}
+
+# 🐍 Python Applications
+for_window [app_id="python3"] {
+    floating enable
+    border pixel 3
+}
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                         🚀 DEFAULT APPLICATIONS                             │
+# └─────────────────────────────────────────────────────────────────────────────┘
+set $term    kitty
+set $menu    wofi --show drun
+set $browser firefox
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                         🖥️ DISPLAY CONFIGURATION                            │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+
+
+# 🌄 Beautiful Wallpaper
+output * bg $HOME/Pictures/wallpapers/wallpaper.jpeg fill
+# 📺 Monitor Setup
+output eDP-1 {
+    resolution 1920x1080
+    position 1920,0
+    allow_tearing yes
+}
+
+# Performance optimization
+output * max_render_time off
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                         👆 INPUT CONFIGURATION                              │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# ✨ Touchpad Settings
+input type:touchpad {
+    dwt enabled                # Disable while typing
+    pointer_accel 1           # Pointer acceleration
+    accel_profile flat        # Flat acceleration profile
+    tap enabled               # Tap to click
+    drag_lock disable         # Disable drag lock
+    natural_scroll enabled    # Natural scrolling
+}
+
+# Uncomment for custom keyboard layout
+# input type:keyboard {
+#     xkb_layout "eu"
+# }
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                          ⚡ WINDOW BEHAVIOR                                 │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# Smart focus following mouse
+focus_follows_mouse yes
+
+# Beautiful window borders with gaps
+gaps inner 5
+gaps outer 3
+default_border pixel 3
+default_floating_border pixel 4
+
+# Smart gaps (hide gaps when only one window)
+smart_gaps off
+smart_borders off
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                          🔒 IDLE CONFIGURATION                              │
+# └─────────────────────────────────────────────────────────────────────────────┘
+exec swayidle -w \
+    timeout 180 'swaylock -f' \
+    timeout 180 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep 'swaylock -f'
+
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                              ⌨️ KEYBINDINGS                                  ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                           🎯 BASIC CONTROLS                                 │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# 🖥️ Launch terminal
+bindsym $mod+Return exec $term
+
+# ❌ Close window
+bindsym $mod+q kill
+
+# 🚀 Application launcher
+bindsym $mod+space exec $menu
+
+# TODO: Custom online search (uncomment when script is ready)
+# bindsym $mod+Shift+space exec $HOME/dotfiles/catpiccin/bin/online-search.sh
+
+# 🔕 Dismiss notifications
+bindsym Control+space exec makoctl dismiss
+
+# 🔄 Configuration management
+bindsym $mod+r reload              
+bindsym $mod+Shift+r exec swaymsg exit   # Restart sway
+
+# 🖱️ Floating window modifier
+floating_modifier $mod normal
+
+# 🚪 Exit sway with confirmation
+bindsym $mod+Shift+e exec swaynag -t warning \
+    -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' \
+    -B 'Yes, exit sway' 'swaymsg exit'
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                           🧭 FOCUS NAVIGATION                               │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# 🎯 Focus movement (Vim keys)
+bindsym $mod+$left  focus left
+bindsym $mod+$down  focus down
+bindsym $mod+$up    focus up
+bindsym $mod+$right focus right
+
+# 🎯 Focus movement (Arrow keys)
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+bindsym $mod+Right focus right
+
+# 📦 Window movement (Vim keys + Shift)
+bindsym $mod+Shift+$left  move left
+bindsym $mod+Shift+$down  move down
+bindsym $mod+Shift+$up    move up
+bindsym $mod+Shift+$right move right
+
+# 📦 Window movement (Arrow keys + Shift)
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Right move right
+
+
+# Toggle waybar
+bindsym $mod+alt+w exec $HOME/bin/waybar-toggle.sh
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                         🏢 WORKSPACE MANAGEMENT                             │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# 🔄 Switch to workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+# 📦 Move container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                          📐 LAYOUT MANAGEMENT                               │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# 🔀 Split orientation
+bindsym $mod+b splith    # Split horizontally
+bindsym $mod+v splitv    # Split vertically
+
+# 📋 Container layouts
+bindsym $mod+m layout tabbed        # Tabbed layout
+bindsym $mod+t layout toggle split  # Toggle split layout
+
+# 🔳 Fullscreen toggle
+bindsym $mod+f fullscreen
+
+# 🎈 Floating controls
+bindsym $mod+s       floating toggle     # Toggle floating
+bindsym $mod+Shift+s focus mode_toggle   # Toggle focus mode
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                         📋 SCRATCHPAD MANAGEMENT                            │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# 📋 Move to scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# 👁️ Show/hide scratchpad
+bindsym $mod+minus scratchpad show
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                          📏 WINDOW RESIZING                                 │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# 🔧 Resize with Alt+Mod+Vim keys
+bindsym $mod+alt+$left  resize shrink width  20px
+bindsym $mod+alt+$up    resize grow   height 20px
+bindsym $mod+alt+$down  resize shrink height 20px
+bindsym $mod+alt+$right resize grow   width  20px
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                        🎵 MEDIA & HARDWARE KEYS                             │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# 🔊 Audio controls
+bindsym --locked XF86AudioRaiseVolume exec $HOME/bin/volume-up.sh
+bindsym --locked XF86AudioLowerVolume exec $HOME/bin/volume-down.sh
+bindsym --locked XF86AudioMute        exec pactl set-sink-mute $(pactl list | rg 'Sink #' | sed 's/Sink #//') toggle
+
+# ☀️ Brightness controls
+bindsym --locked XF86MonBrightnessUp   exec brightnessctl set 5%+
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+
+# ⏯️ Media playback controls
+bindsym --locked XF86AudioPlay exec playerctl -p spotify play-pause
+bindsym --locked XF86AudioNext exec playerctl -p spotify next
+bindsym --locked XF86AudioPrev exec playerctl -p spotify previous
+
+# 🔕 Do Not Disturb toggle
+bindsym --locked $mod+d exec sh -c \
+    "notify-send -i $HOME/pictures/icons/dnd.png '  Do Not Disturb' 'Turning on Do Not Disturb Mode' && sleep 2 && makoctl set-mode do-not-disturb"
+
+bindsym --locked $mod+Shift+d exec sh -c \
+    "makoctl set-mode default && notify-send -i $HOME/pictures/icons/dnd.png '  Do Not Disturb' 'Do Not Disturb Mode disabled'"
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                         📸 SCREENSHOT UTILITIES                             │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# 📷 Full screenshot
+bindsym Print exec $HOME/bin/screenshot.sh
+
+# 📐 Partial screenshot
+bindsym $mod+Print exec $HOME/bin/partial-screenshot.sh
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                           📊 STATUS BAR                                     │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# Status bar is handled by waybar (launched at startup)
+# # Uncomment below for built-in sway bar:
+bar {
+    swaybar_command waybar
+
+}
+#
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                        🔧 ADDITIONAL CONFIGURATIONS                         │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# Include additional config files
+include /etc/sway/config.d/*
+
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                            ✨ END OF CONFIG ✨                               ║
+# ║                     May your workflow be smooth and beautiful!               ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
