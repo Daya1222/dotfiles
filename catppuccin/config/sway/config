@@ -149,6 +149,13 @@ for_window [title="nmtui"] {
 }
 
 
+for_window [app_id="vlc"] {
+    floating enable
+    resize set 1000 700
+    move position center
+    border pixel 2
+}
+
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────┐
