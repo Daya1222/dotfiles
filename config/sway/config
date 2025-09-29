@@ -156,6 +156,13 @@ for_window [app_id="vlc"] {
     border pixel 2
 }
 
+for_window [app_id="imv"] {
+    floating enable
+    resize set 1000 700
+    move position center
+    border pixel 2
+}
+
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -172,7 +179,7 @@ set $browser firefox
 
 
 # 🌄 Beautiful Wallpaper
-output * bg $HOME/Pictures/wallpapers/wallpaper.jpeg fill
+output * bg $HOME/Pictures/wallpapers/flower.png fill
 # 📺 Monitor Setup
 output eDP-1 {
     resolution 1920x1080

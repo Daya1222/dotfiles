@@ -1,54 +1,104 @@
 #!/usr/bin/env bash
-# Script to symlink dotfiles from ~/dotfiles/config to ~/.config
-# and ~/dotfiles/bin to ~/bin
-# and ~/dotfiles/wallpaper to ~/Pictures/wallpapers
+# -----------------------------------------------------------------------------
+# Dotfiles Setup: Install packages and symlink configurations
+# Automatically symlinks ALL directories found in config/
+# -----------------------------------------------------------------------------
+set -euo pipefail
+
+# ----- Configuration -----
+DOTFILES_DIR="$HOME/dotfiles"
+DOTFILES_CONFIG="$DOTFILES_DIR/config"
+DOTFILES_BIN="$DOTFILES_DIR/bin"
+DOTFILES_WALLPAPER="$DOTFILES_DIR/wallpaper"
 
 CONFIG_DIR="$HOME/.config"
-DOTFILES_DIR="$HOME/dotfiles/config"
-BIN_DIR="$HOME/bin"
-DOTFILES_BIN="$HOME/dotfiles/bin"
-PICTURES_DIR="$HOME/Pictures"
-DOTFILES_WALLPAPER="$HOME/dotfiles/wallpaper"
+BIN_TARGET="$HOME/bin"
+WALLPAPER_TARGET="$HOME/Pictures/wallpapers"
 
-# List of directories to link in ~/.config
-dirs=(btop cliphist imv kitty mako nvim ripgrep sway swaylock waybar wofi zathura)
+# Packages to install (edit as needed)
+apps=(
+  btop cliphist imv kitty mako nvim ripgrep
+  sway swaylock-effects waybar wofi zathura
+)
 
-# Create ~/.config symlinks
-for dir in "${dirs[@]}"; do
-    target="$CONFIG_DIR/$dir"
-    source="$DOTFILES_DIR/$dir"
+# ----- Setup -----
+timestamp=$(date +"%Y%m%d_%H%M%S")
+backup_dir="$HOME/dotfiles_backup_$timestamp"
 
-    # Remove existing link/folder if exists
-    if [ -e "$target" ] || [ -L "$target" ]; then
-        echo "Removing existing $target"
-        rm -rf "$target"
+# Create symlink with backup of existing target
+link_safe() {
+  local src="$1"
+  local tgt="$2"
+
+  # Verify source exists
+  if [[ ! -e "$src" ]]; then
+    echo "⚠️  Source missing: $src (skipping)"
+    return 0
+  fi
+
+  # Check if symlink already points to correct location
+  if [[ -L "$tgt" ]]; then
+    local current=$(readlink -f "$tgt" 2>/dev/null || echo "")
+    local desired=$(readlink -f "$src")
+    if [[ "$current" == "$desired" ]]; then
+      echo "✓  Already linked: $tgt"
+      return 0
     fi
+  fi
 
-    # Create symlink
-    ln -s "$source" "$target"
-    echo "Linked $source -> $target"
-done
+  # Backup existing target
+  if [[ -e "$tgt" || -L "$tgt" ]]; then
+    mkdir -p "$backup_dir"
+    echo "📦 Backing up: $tgt"
+    mv "$tgt" "$backup_dir/" || { echo "❌ Failed to backup $tgt"; exit 1; }
+  fi
 
-# Ensure ~/bin exists
-mkdir -p "$BIN_DIR"
+  # Create symlink
+  mkdir -p "$(dirname "$tgt")"
+  ln -s "$src" "$tgt"
+  echo "🔗 Linked: $tgt → $src"
+}
 
-# Create ~/bin symlink
-if [ -L "$BIN_DIR" ]; then
-    echo "Removing existing $BIN_DIR symlink"
-    rm "$BIN_DIR"
+# ----- Install packages -----
+if command -v yay &>/dev/null; then
+  echo "📦 Installing packages..."
+  yay -S --needed --noconfirm "${apps[@]}"
+else
+  echo "⚠️  yay not found (skipping package installation)"
 fi
-ln -s "$DOTFILES_BIN" "$BIN_DIR"
-echo "Linked $DOTFILES_BIN -> $BIN_DIR"
 
-# Link wallpapers
-mkdir -p "$PICTURES_DIR"
-WALLPAPER_TARGET="$PICTURES_DIR/wallpapers"
-if [ -L "$WALLPAPER_TARGET" ] || [ -e "$WALLPAPER_TARGET" ]; then
-    echo "Removing existing $WALLPAPER_TARGET"
-    rm -rf "$WALLPAPER_TARGET"
+# ----- Symlink all config directories automatically -----
+echo ""
+echo "🔧 Setting up config directories..."
+mkdir -p "$CONFIG_DIR"
+
+if [[ -d "$DOTFILES_CONFIG" ]]; then
+  for dir in "$DOTFILES_CONFIG"/*; do
+    # Skip if not a directory
+    [[ -d "$dir" ]] || continue
+    
+    dirname=$(basename "$dir")
+    link_safe "$dir" "$CONFIG_DIR/$dirname"
+  done
+else
+  echo "⚠️  Config directory not found: $DOTFILES_CONFIG"
 fi
-ln -s "$DOTFILES_WALLPAPER" "$WALLPAPER_TARGET"
-echo "Linked $DOTFILES_WALLPAPER -> $WALLPAPER_TARGET"
 
-echo "All symlinks created successfully."
+# ----- Symlink bin directory -----
+echo ""
+echo "🔧 Setting up bin directory..."
+link_safe "$DOTFILES_BIN" "$BIN_TARGET"
 
+# ----- Symlink wallpapers -----
+echo ""
+echo "🖼️  Setting up wallpapers..."
+mkdir -p "$(dirname "$WALLPAPER_TARGET")"
+link_safe "$DOTFILES_WALLPAPER" "$WALLPAPER_TARGET"
+
+# ----- Completion -----
+echo ""
+echo "✅ Setup complete!"
+if [[ -d "$backup_dir" ]]; then
+  echo "📦 Backups saved to: $backup_dir"
+  echo "   Remove after verification: rm -rf $backup_dir"
+fi
