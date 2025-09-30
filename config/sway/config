@@ -24,7 +24,6 @@ xwayland enable
 # │                              🚀 STARTUP PROGRAMS                            │
 # └─────────────────────────────────────────────────────────────────────────────┘
 
-
 exec mako
 # exec waybar
 
@@ -163,6 +162,14 @@ for_window [app_id="imv"] {
     border pixel 2
 }
 
+for_window [app_id="btop"] {
+    floating enable
+    resize set 1000 700
+    move position center
+    border pixel 2
+}
+
+
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -250,8 +257,16 @@ bindsym $mod+Return exec $term
 bindsym $mod+q kill
 
 # 🚀 Application launcher
-bindsym $mod+space exec $menu
-
+bindsym $mod+space exec wofi --show drun \
+    --width 300 \
+    --height 100 \
+    --xoffset 810 \
+    --yoffset 20 \
+    --hide-scroll \
+    --matching=fuzzy \
+    --insensitive \
+    --allow-markup \
+    --style ~/.config/wofi/style.css
 
 # 🔕 Dismiss notifications
 bindsym Control+space exec makoctl dismiss
@@ -264,7 +279,7 @@ bindsym $mod+Shift+r exec swaymsg exit   # Restart sway
 floating_modifier $mod normal
 
 # 🚪 Exit sway with confirmation
-bindsym $mod+Shift+e exec $HOME/dotfiles/catppuccin/bin/power-menu.sh
+bindsym $mod+Shift+e exec $HOME/bin/power-menu.sh
 
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                           🧭 FOCUS NAVIGATION                               │
@@ -385,10 +400,10 @@ bindsym --locked XF86AudioPrev exec playerctl -p spotify previous
 
 # 🔕 Do Not Disturb toggle
 bindsym --locked $mod+d exec sh -c \
-    "notify-send -i $HOME/pictures/icons/dnd.png '  Do Not Disturb' 'Turning on Do Not Disturb Mode' && sleep 2 && makoctl set-mode do-not-disturb"
+    "notify-send -i $HOME/Pictures/icons/dnd.png '  Do Not Disturb' 'Turning on Do Not Disturb Mode' && sleep 2 && makoctl set-mode do-not-disturb"
 
 bindsym --locked $mod+Shift+d exec sh -c \
-    "makoctl set-mode default && notify-send -i $HOME/pictures/icons/dnd.png '  Do Not Disturb' 'Do Not Disturb Mode disabled'"
+    "makoctl set-mode default && notify-send -i $HOME/Pictures/ictures/icons/dnd.png '  Do Not Disturb' 'Do Not Disturb Mode disabled'"
 
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                         📸 SCREENSHOT UTILITIES                             │
@@ -406,8 +421,6 @@ bindsym $mod+Shift+v exec cliphist wipe
 
 # Emoji picker keybinds
 bindsym $mod+period exec $HOME/bin/emoji-picker.sh
-bindsym $mod+Shift+period exec $HOME/bin/emoji-picker.sh search
-bindsym $mod+Alt+period exec $HOME/bin/emoji-picker.sh recent
 
 # Wallpaper Switch
 bindsym $mod+w exec ~/bin/wallpaper.sh

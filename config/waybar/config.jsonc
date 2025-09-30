@@ -70,7 +70,7 @@
         "states": {
             "critical": 90
         },
-        "on-click": "btop"                },
+        "on-click": "kitty --class btop -e btop"                },
 
     "memory": {
         "format": "   {percentage}%",
@@ -78,17 +78,32 @@
         "states": {
             "critical": 80
         },
-        "on-click": "btop"          },
+        "on-click": "kitty --class btop -e btop"
+    },
 
-    "battery": {
-        "format": "   {capacity}%",
-        "interval": 5,
-        "states": {
-            "warning": 20,
-            "critical": 10
-        },
-        "tooltip":true
-          },
+   "battery": {
+       "format": "{icon}   {capacity}%",
+       "format-charging": "  {capacity}%",
+       "format-full": "   {capacity}%",
+       "interval": 5,
+       "states": {
+           "full": 100,
+           "high": 80,
+           "medium": 60,
+           "low": 40,
+           "warning": 20,
+           "critical": 10
+       },
+       "format-icons": [
+           "",  // 0–20%
+           "",  // 21–40%
+           "",  // 41–60%
+           "",  // 61–80%
+           ""   // 81–100%
+       ],
+       "tooltip": true,
+       "on-click": "~/bin/powerprofiles.sh"
+    },
 
     "backlight": {
         "format": "   {percent}%",

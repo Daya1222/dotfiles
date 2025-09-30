@@ -2,18 +2,28 @@ return {
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
-  ---@type snacks.Config
   opts = {
     bigfile = { enabled = true },
     dashboard = { enabled = true },
-    explorer = { enabled = true },
+    explorer = { enabled = true,},
     indent = { enabled = true },
     input = { enabled = true },
     notifier = {
       enabled = true,
       timeout = 3000,
     },
-    picker = { enabled = true },
+    picker = { 
+            enabled = true,
+            sources = {
+                explorer={
+                    layout = {
+                        layout = {
+                            width = 25,
+                        },
+                    },
+                },
+            },
+        },
     quickfile = { enabled = true },
     scope = { enabled = true },
     scroll = { enabled = true },
@@ -21,7 +31,7 @@ return {
     words = { enabled = true },
     styles = {
       notification = {
-        -- wo = { wrap = true } -- Wrap notifications
+        wo = { wrap = true } -- Wrap notifications
       }
     }
   },

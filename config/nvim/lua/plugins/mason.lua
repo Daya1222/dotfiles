@@ -1,7 +1,12 @@
-return {
+return{
     "mason-org/mason.nvim",
-    lazy = true,
-    cmd = "Mason",
-
-    opts = {}
+    opts = {
+        ui = {
+            icons = {
+                package_installed = "✓",
+                package_pending = "➜",
+                package_uninstalled = "✗"
+            }
+        }
+    }
 }
