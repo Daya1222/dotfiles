@@ -1,14 +1,4 @@
 return {
-	{
-		{
-			"windwp/nvim-autopairs",
-			event = "InsertEnter",
-			config = true,
-			opts = {
-				check_ts = true,
-			},
-		},
-	},
 	--Auto pair
 	{
 		"nvim-mini/mini.pairs",
