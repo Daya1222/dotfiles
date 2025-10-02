@@ -423,7 +423,10 @@ bindsym $mod+Shift+v exec cliphist wipe
 bindsym $mod+period exec $HOME/bin/emoji-picker.sh
 
 # Wallpaper Switch
-bindsym $mod+w exec ~/bin/wallpaper.sh
+bindsym $mod+w exec $HOME/bin/wallpaper.sh
+
+# Colorpicker
+bindsym $mod+p exec $HOME/bin/colorpicker.sh
 
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                           📊 STATUS BAR                                     │
