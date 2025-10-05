@@ -22,7 +22,7 @@ apps=(
   slurp imagemagick grim tff-jetbrains-mono-nerd
   brightnessctl pipewire pipewire-pulse wireplumber
   pavucontrol noto-fonts-emoji ttf-font-awesome-5 
-  nodejs npm unzip lazygit fd swaybg fish
+  nodejs npm unzip lazygit fd swaybg swayidle swaylock-effects fish
 )
 
 # ----- Setup -----
