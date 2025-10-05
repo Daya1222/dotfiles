@@ -31,6 +31,7 @@ tooltip label {
 #battery,
 #network,
 #backlight,
+#temperature,
 #pulseaudio,
 #language,
 #custom-power{
@@ -79,6 +80,7 @@ tooltip label {
 #network,
 #pulseaudio,
 #battery,
+#temperature,
 #tray,
 #backlight,
 #language {

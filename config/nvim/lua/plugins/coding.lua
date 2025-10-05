@@ -2,7 +2,6 @@ return {
 	--Auto pair
 	{
 		"nvim-mini/mini.pairs",
-		enabled = false,
 		event = { "BufReadPost", "BufNewFile" },
 
 		opts = {
@@ -54,7 +53,6 @@ return {
 	},
 	{
 		"windwp/nvim-ts-autotag",
-		enabled = false,
 		ft = { "html", "javascriptreact", "typescriptreact" }, -- load only for these filetypes
 		config = function()
 			require("nvim-ts-autotag").setup({

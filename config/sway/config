@@ -186,7 +186,7 @@ set $browser firefox
 
 
 # 🌄 Beautiful Wallpaper
-output * bg $HOME/Pictures/wallpapers/flower.png fill
+output * bg $HOME/Pictures/wallpapers/wallpaper.jpeg fill
 # 📺 Monitor Setup
 output eDP-1 {
     resolution 1920x1080

@@ -1,28 +1,31 @@
 #!/bin/bash
-# Power profiles menu script with indicator
+# TLP power mode menu script with indicator
 
-current=$(powerprofilesctl get)
+# Get current mode
+if systemctl is-active --quiet tlp.service; then
+    current=$(tlp-stat -s | grep "^Mode" | awk '{print $3}' | tr '[:upper:]' '[:lower:]')
+else
+    echo "TLP is not running"
+    exit 1
+fi
 
 # Define options with icons
-options="  Performance
-  Balanced
-  Power Saver"
+options="⚡ Performance (AC Mode)
+🔋 Power Saver (Battery Mode)"
 
 # Add styled checkmark and bold text to current profile
-if [[ "$current" == "performance" ]]; then
-    options=$(echo "$options" | sed "s/\(  Performance\)/<span foreground='#a6e3a1'>✔<\/span> <b>\1<\/b>/")
-elif [[ "$current" == "balanced" ]]; then
-    options=$(echo "$options" | sed "s/\(  Balanced\)/<span foreground='#a6e3a1'>✔<\/span> <b>\1<\/b>/")
-elif [[ "$current" == "power-saver" ]]; then
-    options=$(echo "$options" | sed "s/\(  Power Saver\)/<span foreground='#a6e3a1'>✔<\/span> <b>\1<\/b>/")
+if [[ "$current" == "ac" ]]; then
+    options=$(echo "$options" | sed "s/\(⚡ Performance (AC Mode)\)/<span foreground='#a6e3a1'>✔<\/span> <b>\1<\/b>/")
+elif [[ "$current" == "battery" ]]; then
+    options=$(echo "$options" | sed "s/\(🔋 Power Saver (Battery Mode)\)/<span foreground='#a6e3a1'>✔<\/span> <b>\1<\/b>/")
 fi
 
 # Show menu
 action=$(echo -e "$options" | wofi \
     --dmenu \
-    --prompt "Power Profiles" \
+    --prompt "TLP Power Mode" \
     --width 300 \
-    --height 115 \
+    --height 76 \
     --xoffset 1370  \
     --yoffset 20 \
     --cache-file /dev/null \
@@ -37,17 +40,15 @@ action=$(echo -e "$options" | wofi \
 action=$(echo "$action" | sed 's/<[^>]*>//g' | sed 's/^✔ //')
 
 case $action in
-    "  Performance")
-        powerprofilesctl set performance
+    "⚡ Performance (AC Mode)")
+        sudo tlp ac
+        notify-send "TLP" "Switched to AC/Performance mode" -t 2000
         ;;
-    "  Balanced")
-        powerprofilesctl set balanced
-        ;;
-    "  Power Saver")
-        powerprofilesctl set power-saver
+    "🔋 Power Saver (Battery Mode)")
+        sudo tlp bat
+        notify-send "TLP" "Switched to Battery/Power Saver mode" -t 2000
         ;;
     *)
         exit 0
         ;;
 esac
-
