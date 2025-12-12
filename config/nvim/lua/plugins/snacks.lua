@@ -6,6 +6,7 @@ return {
 	opts = {
 		terminal = { enabled = false },
 		bigfile = { enabled = true },
+		image = { enabled = true },
 		dashboard = {
 			enabled = true,
 			preset = {
@@ -285,7 +286,17 @@ return {
 		{
 			"<leader>x",
 			function()
+				local bufs = vim.fn.getbufinfo({ buflisted = 1 })
+				local real_buffers = vim.tbl_filter(function(buf)
+					return buf.name ~= "" or buf.changed == 1
+				end, bufs)
+
 				Snacks.bufdelete()
+				if #real_buffers <= 1 then
+					vim.schedule(function()
+						Snacks.dashboard()
+					end)
+				end
 			end,
 			desc = "󱕖 Delete Buffer",
 		},

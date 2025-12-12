@@ -4,12 +4,6 @@ vim.g.maplocalleader = "//"
 -- Exit insert mode
 vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })
 
--- Insert mode navigation
-vim.keymap.set("i", "<C-h>", "<Left>", { desc = "Move left in insert mode" })
-vim.keymap.set("i", "<C-j>", "<Down>", { desc = "Move down in insert mode" })
-vim.keymap.set("i", "<C-k>", "<Up>", { desc = "Move up in insert mode" })
-vim.keymap.set("i", "<C-l>", "<Right>", { desc = "Move right in insert mode" })
-
 -- Window navigation
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to down window" })
@@ -21,7 +15,25 @@ vim.keymap.set("n", "<leader>o", "<cmd>b#<CR>", { desc = "󰮲 Switch to alterna
 -- Delete without yanking
 vim.keymap.set("v", "x", '"_d', { desc = "Delete without yanking" })
 
---- Mini files
+-- Mini files
 vim.keymap.set("n", "<leader>e", function()
 	require("mini.files").open()
 end, { desc = "󰙅 File Explorer" })
+
+-- Copilot Chat keymaps
+local copilot_keymaps = {
+	{ { "n", "v" }, "<leader>cc", ":CopilotChat ", " Copilot Chat" },
+	{ { "n", "v" }, "<leader>co", ":CopilotChatOpen<CR>", " Open Copilot Chat" },
+	{ "n", "<leader>cx", ":CopilotChatClose<CR>", " Close Copilot Chat" },
+	{ "n", "<leader>ct", ":CopilotChatToggle<CR>", " Toggle Copilot Chat" },
+	{ "n", "<leader>cs", ":CopilotChatStop<CR>", " Stop Copilot Chat output" },
+	{ "n", "<leader>cr", ":CopilotChatReset<CR>", " Reset Copilot Chat window" },
+	{ "n", "<leader>cp", ":CopilotChatPrompts<CR>", " View Copilot Chat prompts" },
+	{ "n", "<leader>cm", ":CopilotChatModels<CR>", " View Copilot Chat models" },
+	{ "n", "<leader>cv", ":CopilotChatSave ", " Save Copilot Chat history" },
+	{ "n", "<leader>cl", ":CopilotChatLoad ", " Load Copilot Chat history" },
+}
+
+for _, map in ipairs(copilot_keymaps) do
+	vim.keymap.set(map[1], map[2], map[3], { desc = map[4] })
+end

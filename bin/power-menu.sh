@@ -23,7 +23,7 @@ case $action in
     "󰐥 Shutdown")
         systemctl poweroff
         ;;
-    " Reboot")
+    " Reboot")
         systemctl reboot
         ;;
     "󰒲 Suspend")
@@ -37,7 +37,7 @@ case $action in
     "󰌾 Lock Screen")
         swaylock -f
         ;;
-    " Hibernate")
+    " Hibernate")
         swaylock -f &
         sleep 0.5
         systemctl hibernate

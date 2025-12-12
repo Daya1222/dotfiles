@@ -1,18 +1,17 @@
+# ~/.config/fish/config.fish
+
 if status is-interactive
-    # Remove Greeting
-    set -U fish_greeting
-
-    # Locale
-    set -x LANG en_US.UTF-8
-    set -x LC_ALL en_US.UTF-8
-
-    # Aliases
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-
-    # Rust environment
-    if test -d $HOME/.cargo/bin
-        fish_add_path $HOME/.cargo/bin
+    set fish_greeting ""
+    if test -f ~/.config/fish/aliases.fish
+        source ~/.config/fish/aliases.fish
+    end
+    if test -f ~/.config/fish/functions.fish
+        source ~/.config/fish/functions.fish
+    end
+    if test -f ~/.config/fish/starship.fish
+        source ~/.config/fish/starship.fish
+    end
+    if test -f ~/.config/fish/prompt.fish
+        source ~/.config/fish/prompt.fish
     end
 end
-

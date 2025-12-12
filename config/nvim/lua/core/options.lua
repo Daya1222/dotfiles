@@ -15,7 +15,7 @@ vim.o.relativenumber = true -- Relative line numbers
 vim.o.cursorline = true -- Highlight current line
 vim.o.termguicolors = true -- True color support
 vim.o.signcolumn = "yes" -- Always show sign column
-vim.o.scrolloff = 8 -- Keep 8 lines visible when scrolling
+vim.o.scrolloff = 4 -- Keep 8 lines visible when scrolling
 vim.o.sidescrolloff = 8 -- Horizontal scroll buffer
 
 -- ───────────────────────────────

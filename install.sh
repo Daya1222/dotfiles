@@ -18,10 +18,10 @@ WALLPAPER_TARGET="$HOME/Pictures/wallpapers"
 # Packages to install (edit as needed)
 apps=(
   btop firefox cliphist imv kitty mako nvim ripgrep
-  sway swaylock-effects waybar wofi zathura
+  sway swaylock-effects waybar wofi
   slurp imagemagick grim tff-jetbrains-mono-nerd
   brightnessctl pipewire pipewire-pulse wireplumber
-  pavucontrol noto-fonts-emoji ttf-font-awesome-5 
+  pavucontrol noto-fonts-emoji
   nodejs npm unzip lazygit fd swaybg swayidle swaylock-effects fish
 )
 

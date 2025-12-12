@@ -63,7 +63,7 @@
 
 "temperature": {
     "hwmon-path": "/sys/class/hwmon/hwmon5/temp1_input",
-    "format": "🌡️ {temperatureC}°C",
+    "format": "  {temperatureC}°C",
     "interval": 5,
     "tooltip": false,
     "on-click": "kitty --class btop -e btop"
@@ -77,7 +77,7 @@
         "on-click": "kitty --class btop -e btop"
     },
     "memory": {
-        "format": "   {percentage}%",
+        "format": "   {percentage}%",
         "interval": 2,
         "states": {
             "critical": 80
@@ -116,8 +116,8 @@
     },
     "network": {
         "format-wifi": "   {bandwidthDownBits}",
-        "format-ethernet": "   {bandwidthDownBits}",
-        "format-disconnected": "睊 no network",
+        "format-ethernet": "󰈂 {bandwidthDownBits}",
+        "format-disconnected": "󰖪  no network",
         "interval": 5,
         "on-click": "kitty --title nmtui-float --class nmtui-launcher -e nmtui",
         "tooltip": false

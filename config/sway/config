@@ -6,7 +6,6 @@
 
 # Environment variables
 
-
     # Set dark theme preference
 exec_always {
 systemctl --user import-environment TERMINAL
@@ -131,12 +130,6 @@ for_window [app_id="pavucontrol"] {
     border pixel 2
 }
 
-for_window [app_id="org.gnome.Nautilus"] {
-    floating enable
-    resize set 1000 700
-    move position center
-    border pixel 2
-}
 
 # In sway config:
 assign [title="nmtui"] workspace number 99
@@ -176,8 +169,7 @@ for_window [app_id="btop"] {
 # │                         🚀 DEFAULT APPLICATIONS                             │
 # └─────────────────────────────────────────────────────────────────────────────┘
 set $term    kitty
-set $menu    wofi --show drun
-set $browser firefox
+set $browser chromium
 
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                         🖥️ DISPLAY CONFIGURATION                            │
@@ -186,7 +178,7 @@ set $browser firefox
 
 
 # 🌄 Beautiful Wallpaper
-output * bg $HOME/Pictures/wallpapers/wallpaper.jpeg fill
+output * bg $HOME/Pictures/wallpapers/3d-model.jpg fill
 # 📺 Monitor Setup
 output eDP-1 {
     resolution 1920x1080

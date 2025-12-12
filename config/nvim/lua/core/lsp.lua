@@ -67,7 +67,33 @@ vim.lsp.config("rust_analyzer", {
 	},
 })
 
-vim.lsp.enable({ "basedpyright", "ts_ls", "lua_ls", "cssls", "html", "tailwindcss", "rust_analyzer" })
+vim.lsp.config("clangd", {
+	cmd = {
+		"clangd",
+		"--background-index",
+		"--clang-tidy",
+		"--header-insertion=iwyu",
+		"--completion-style=detailed",
+		"--function-arg-placeholders",
+		"--fallback-style=llvm",
+	},
+	root_markers = {
+		"compile_commands.json",
+		"compile_flags.txt",
+		"Makefile",
+		".git",
+	},
+	capabilities = {
+		offsetEncoding = { "utf-16" },
+	},
+	init_options = {
+		usePlaceholders = true,
+		completeUnimported = true,
+		clangdFileStatus = true,
+	},
+})
+
+vim.lsp.enable({ "basedpyright", "ts_ls", "lua_ls", "cssls", "html", "tailwindcss", "rust_analyzer", "clangd" })
 
 vim.diagnostic.config({
 	virtual_text = {
