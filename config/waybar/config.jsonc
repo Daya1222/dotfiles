@@ -47,9 +47,9 @@
             "10": []
         },
         "format-icons": {
-            "default": "",
-            "urgent": "",
-            "focused": ""
+            "default": " ",
+            "urgent": " ",
+            "focused": " "
         }
     },
     "tray": {
@@ -58,8 +58,8 @@
     },
     "clock": {
         "format": "   {:%I:%M %p - %a, %d %b %Y}",
-        "tooltip": false
-    },
+        "tooltip": false,
+},
 
 "temperature": {
     "hwmon-path": "/sys/class/hwmon/hwmon5/temp1_input",
@@ -86,7 +86,7 @@
     },
     "battery": {
         "format": "{icon}   {capacity}%",
-        "format-charging": "  {capacity}%",
+        "format-charging": "   {capacity}%",
         "format-full": "   {capacity}%",
         "interval": 5,
         "states": {
@@ -108,7 +108,7 @@
         "on-click": "~/bin/powerprofiles.sh"
     },
     "backlight": {
-        "format": "   {percent}%",
+        "format": "󰃟  {percent}%",
         "interval": 2,
         "on-scroll-up": "brightnessctl set +1%",
         "on-scroll-down": "brightnessctl set 1%-",
@@ -116,7 +116,7 @@
     },
     "network": {
         "format-wifi": "   {bandwidthDownBits}",
-        "format-ethernet": "󰈂 {bandwidthDownBits}",
+        "format-ethernet": "󰈂  {bandwidthDownBits}",
         "format-disconnected": "󰖪  no network",
         "interval": 5,
         "on-click": "kitty --title nmtui-float --class nmtui-launcher -e nmtui",
@@ -134,7 +134,7 @@
     "custom/power": {
         "format": "",
         "on-click": "~/bin/power-menu.sh",
-        "on-click-right": "systemctl suspend",      // Right click → suspend
+        "on-click-right": "systemctl suspend",
         "tooltip": "Power Off",
         "interval": 0
     }

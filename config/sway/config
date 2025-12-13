@@ -4,15 +4,6 @@
 # ║                        Elegant • Functional • Gorgeous                       ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
-# Environment variables
-
-    # Set dark theme preference
-exec_always {
-systemctl --user import-environment TERMINAL
-    systemctl --user import-environment TERM
-    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
-    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-}
 
 # Start clipboard
 exec wl-paste --watch cliphist store
@@ -48,7 +39,7 @@ set $right l
 
 # Window Border Colors:
 # class                   border    background  text        indicator   child_border
-client.focused           #B4A7D1   #2D1B69     #FFFFFF     #E78284     #b6a0ff
+client.focused           #B4A7D1   #2D1B69     #FFFFFF     #b6a0ff     #b6a0ff
 client.focused_inactive  #8CAAEE   #414559     #C6D0F5     #BABBF1     #8CAAEE
 client.unfocused         #626880   #303446     #A5ADCE     #737994     #626880
 client.urgent            #E78284   #E78284     #303446     #E78284     #E78284
@@ -163,13 +154,19 @@ for_window [app_id="btop"] {
 }
 
 
+for_window [app_id="copilot-kitty"] {
+    floating enable
+    resize set width 500 px height 1009 px
+    move position 1402 px 2 px
+}
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                         🚀 DEFAULT APPLICATIONS                             │
 # └─────────────────────────────────────────────────────────────────────────────┘
-set $term    kitty
+set $term kitty
 set $browser chromium
+set $system-monitor kitty --class btop -e btop
 
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                         🖥️ DISPLAY CONFIGURATION                            │
@@ -315,6 +312,12 @@ floating_modifier $mod normal
 
 # 🚪 Exit sway with confirmation
 bindsym $mod+Shift+e exec $HOME/bin/power-menu.sh
+
+#   Launch Copilot
+bindsym $mod+c exec $HOME/bin/ai.sh
+
+# 󰭄 Launch system Monitor
+bindsym $mod+Shift+m exec $system-monitor
 
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                           🧭 FOCUS NAVIGATION                               │
